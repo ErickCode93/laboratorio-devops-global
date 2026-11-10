@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-fastapi-deployment
+  labels:
+    app: backend-fastapi
+spec:
+  replicas: 2 # <-- Dos instancias de tu app corriendo en paralelo
+  selector:
+    matchLabels:
+      app: backend-fastapi
+  template:
+    metadata:
+      labels:
+        app: backend-fastapi
+    spec:
+      containers:
+      - name: fastapi-container
+        image: mi-backend-fastapi:v2
+        imagePullPolicy: Never # <-- Crucial: le dice a K8s que busque la imagen local de Minikube y no en internet
+        ports:
+        - containerPort: 8000

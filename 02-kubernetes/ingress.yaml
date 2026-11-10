@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-fastapi-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx # <-- Llama al componente que vimos activo en tu Minikube
+  rules:
+  - host: mi-laboratorio.local # <-- El dominio ficticio profesional que usaremos
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-fastapi-service # <-- Conecta con tu Service
+            port:
+              number: 8000

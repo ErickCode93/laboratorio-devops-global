@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-fastapi-service
+  labels:
+    app: backend-fastapi
+  # ⬇️ ESTAS ANOTACIONES LE DICEN A PROMETHEUS QUÉ HACER
+  annotations:
+    prometheus.io/scrape: "true"      # "Oye Prometheus, rásfame"
+    prometheus.io/port: "8000"        # "Búscame en el puerto 8000"
+    prometheus.io/path: "/metrics"    # "Las métricas están en esta ruta"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: backend-fastapi
